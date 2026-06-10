@@ -1,0 +1,37 @@
+SELECT genre,AVG(profit) FROM tmdb_movies_data GROUP BY genre - looking for which genre has the highest profit
+
+SELECT genre, AVG(budget), AVG(profit) FROM tmdb_movies_data GROUP BY genre ORDER BY AVG(profit) DESC - seeing if action movies have higher profits because of higher budget or better genre
+
+SELECT genre,AVG(profit/budget) FROM tmdb_movies_data GROUP BY genre - To calculate which genre has the best return on investment
+
+1. Clean the data -- remove rows where budget or revenue is 0
+
+DELETE FROM tmdb_movies_data WHERE budget = 0 OR revenue = 0;
+
+2. Add a profit column
+
+ALTER TABLE tmdb_movies_data ADD COLUMN profit DOUBLE(10,2);
+
+3. Calculate profit for every row
+
+UPDATE tmdb_movies_data SET profit = revenue - budget;
+
+4. Top 10 most profitable films
+
+SELECT original_title, profit FROM tmdb_movies_data ORDER BY profit DESC LIMIT 10;
+
+5. Does budget affect profit? -- top 10 by profit showing budget
+
+SELECT budget, profit FROM tmdb_movies_data ORDER BY profit DESC LIMIT 10;
+
+6. Average profit by genre
+
+SELECT genre, AVG(profit) FROM tmdb_movies_data GROUP BY genre;
+
+7. Average budget and profit by genre
+
+SELECT genre, AVG(budget), AVG(profit) FROM tmdb_movies_data GROUP BY genre;
+
+8. Return on investment by genre
+
+SELECT genre, AVG(profit/budget) FROM tmdb_movies_data GROUP BY genre;
